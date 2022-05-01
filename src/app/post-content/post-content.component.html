@@ -1,8 +1,22 @@
 <!-- <p>post-content works!</p> -->
-ID: {{ ID }}<br>
-<p class="post-title">{{ title }}</p>
 <div>
-<p class="post-contet">{{ description}}</p>
-</div>
+  <div fxLayoutAlign="center" *ngIf="Loader; else elseBlockl">
+    <mat-spinner></mat-spinner>
+  </div>
+  <ng-template #elseBlockl>
+    <p class="post-title">{{ PostContent.title }}</p>
+    <div>
+      <p class="post-contet">{{ PostContent.body }}</p>
+    </div>
+    <div>
+      <p>comments list</p>
+      <div *ngFor="let postComments of PostContent.comments">
+          <p>Comment =>{{postComments.body}}</p>
+          <p>CommentBy =>{{postComments.name}}</p>
+            <hr>
+      </div>
+    </div>
 
-<button [routerLink]="['/article']">Go Back</button>
+    <button [routerLink]="['/article']">Go Back</button>
+  </ng-template>
+</div>

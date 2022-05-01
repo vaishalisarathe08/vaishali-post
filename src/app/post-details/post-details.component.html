@@ -1,34 +1,38 @@
-<p>post-details works!</p>
-    
-  
-    <div >
-      <!-- <label>Search your book</label> -->
-    <!-- <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="off" style="height: 35px ;"> -->
-      <div style="background-color: #ffff;">
-      <button class="search-icon" mat-icon-button disabled style="border: none;background-color: #ffff;">
-        <mat-icon>search</mat-icon>
-      </button>
-      <input class="search-control" type="text" placeholder="Search" [(ngModel)]="searchText" #searchbar style="border:none; padding: 9px 0 4px 0;">
-      <button mat-button mat-icon-button style="border: none;background-color: #ffff;">
-        <mat-icon>close</mat-icon>
-      </button> 
-    </div>
-  </div>
-
 <div fxLayout="column">
-    <h1 class="heaing">Trending Articles</h1>
-    
-    <div fxFlex=100  fxLayoutAlign="center" *ngFor="let post of Users | filter: searchText">
-       
-        <!-- <div fxFlex=33 fxFlex.sm=25 fxFlex.xs=33><img src={{post.post_image.thumbnail_image_url}} style="width: 100px; height: 70px;"></div> -->
-        
-        <div fxLayout="column" fxFlex=35 fxFlex.sm="55" fxFlex.xs=42 [routerLink]="['/article-content', post.ID]">{{post.title}}
-            <!-- <div *ngFor="let cat of post.post_category | filter: searchText" >
-                <div>{{cat.body}}</div>
-            </div> -->
+  <h1 class="heaing">Trending Articles</h1>
+  <div fxLayoutAlign="center" *ngIf="Loader; else elseBlockl">
+    <mat-spinner></mat-spinner>
+  </div>
+  <ng-template #elseBlockl>
+    <mat-grid-list cols="4" rowHeight="2:1">
+      <div *ngFor="let post of Posts | filter: searchText">
+        <div>
+          <mat-grid-tile (click)="openpost(post.id,post)">
+            <mat-card class="example-card">
+              <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+              <mat-card-title>{{ post.title }}</mat-card-title>
+              <mat-card-content>
+                <p>{{ post.body }}</p>
+              </mat-card-content>
+              <!--  <mat-divider inset></mat-divider> -->
+              <mat-card-actions>
+                <p mat-button>Post By <b> {{post.user.name}}</b> on sept24,2019</p>
+              </mat-card-actions>
+              <mat-card-footer>
+                <!--     <mat-progress-bar mode="indeterminate"></mat-progress-bar> -->
+              </mat-card-footer>
+            </mat-card>
+          </mat-grid-tile>
         </div>
-        <div fxFlex=31 fxFlex.sm="20" fxFlex.xs=20>{{post.body}}</div>
-    </div>
-    <!-- <pagination-controls (pageChange)="1 = $event" class="float-right"></pagination-controls> -->
-
+      </div>
+    </mat-grid-list>
+  </ng-template>
+  <div fxLayoutAlign="center">
+    <button  type="text">
+      Post On page {{TotalActivePost}}
+    </button>
+    <button (click)="handleLoadMore(TotalActivePost)" type="”button”">
+      Load More
+    </button>
+  </div>
 </div>
